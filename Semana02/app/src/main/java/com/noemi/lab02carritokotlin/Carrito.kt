@@ -58,7 +58,49 @@ fun main() {
 
     println(String.format("TOTAL CON DESCUENTO : S/ %.2f", totalConDescuento))
     println()
+
     println("Gracias por su compra, $nombreCliente!")
+
+
+    //reto adicional
+    println("=========================================")
+    println("            RETO ADICIONAL               ")
+    println("=========================================")
+
+    // 1. Buscar producto con find
+    val productoBuscado = buscarProducto(carrito, "Mouse Logitech")
+    if (productoBuscado != null) {
+        println("Producto encontrado: ${productoBuscado.nombre} - Precio: S/ ${productoBuscado.precio}")
+    } else {
+        println("Producto no encontrado en el carrito.")
+    }
+
+    println()
+
+    // 2. Eliminar producto con removeIf ("Mouse Logitech")
+    val nombreAEliminar = "Mouse Logitech"
+    println("Eliminando producto: $nombreAEliminar...")
+    carrito.removeIf { it.nombre.equals(nombreAEliminar, ignoreCase = true) }
+
+    println()
+
+    // 3. Volver a mostrar el detalle y totales actualizados
+    println("--- CARRITO ACTUALIZADO TRAS ELIMINACION ---")
+    mostrarDetalle(carrito)
+
+    val subtotalActualizado = calcularSubtotal(carrito)
+    val igvActualizado = calcularIGV(subtotalActualizado)
+    val totalActualizado = calcularTotal(subtotalActualizado, igvActualizado)
+
+    println(String.format("%-22s: %d", "Cantidad de productos", carrito.size))
+    println(String.format("%-22s: S/ %8.2f", "Subtotal", subtotalActualizado))
+    println(String.format("%-22s: S/ %8.2f", "IGV (18%)", igvActualizado))
+    println(String.format("%-22s: S/ %8.2f", "TOTAL A PAGAR", totalActualizado))
+
+    println()
+}
+fun buscarProducto(productos: List<Producto>, nombre: String): Producto? {
+    return productos.find { it.nombre.equals(nombre, ignoreCase = true) }
 }
 fun mostrarDetalle(productos: List<Producto>) {
     println("---------------- DETALLE DEL CARRITO ----------------")
