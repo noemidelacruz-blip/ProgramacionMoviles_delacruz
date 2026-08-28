@@ -1,22 +1,42 @@
 package com.noemi.lab02carritokotlin
 
-class GestorCompras {
-    // Encapsulamiento: la lista es privada y mutable solo internamente
-    private val _itemsSeleccionados = mutableListOf<Vendible>()
+class GestorCompras(var cliente: String = "ANONIMO") {
 
-    // Exponemos una lista de solo lectura hacia afuera
-    val itemsSeleccionados: List<Vendible>
-        get() = _itemsSeleccionados
+    // Constructor secundario
+    constructor() : this("ANONIMO")
+
+    private val elementosSeleccionados = mutableListOf<Vendible>()
 
     fun agregarElemento(item: Vendible) {
-        _itemsSeleccionados.add(item)
+        elementosSeleccionados.add(item)
+        println("Producto agregado: ${item.denominacion}")
     }
 
     fun removerElementoPorId(id: String): Boolean {
-        return _itemsSeleccionados.removeIf { it.identificador == id }
+        val eliminado = elementosSeleccionados.removeIf { it.identificador == id }
+        if (eliminado) {
+            println("Producto con ID '$id' eliminado del carrito.")
+        }
+        return eliminado
+    }
+
+    fun calcularSubtotal(): Double {
+        return elementosSeleccionados.sumOf { it.obtenerImporteTotal() }
+    }
+
+    fun calcularIGV(): Double {
+        return calcularSubtotal() * 0.18
     }
 
     fun calcularMontoTotal(): Double {
-        return _itemsSeleccionados.sumOf { it.obtenerImporteTotal() }
+        return calcularSubtotal() + calcularIGV()
+    }
+
+    fun obtenerCantidadTotalProductos(): Int {
+        return elementosSeleccionados.size
+    }
+
+    fun obtenerLista(): List<Vendible> {
+        return elementosSeleccionados
     }
 }
