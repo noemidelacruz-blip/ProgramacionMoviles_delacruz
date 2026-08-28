@@ -49,14 +49,15 @@ fun main() {
     val scanner = Scanner(System.`in`)
     val listaVehiculos = mutableListOf<VehiculoProcesado>()
 
-    println("=== CÁLCULOS Y OPERACIONES ===")
     print("¿Cuántos vehículos desea procesar?: ")
     val cantidad = scanner.nextInt()
     scanner.nextLine()
 
     var i = 1
     while (i <= cantidad) {
-        println("\n--- Vehículo $i ---")
+        println("\n====================================")
+        println("       REGISTRO DE VEHÍCULO $i")
+        println("====================================")
         print("Placa: ")
         val placa = scanner.nextLine()
 
@@ -73,7 +74,7 @@ fun main() {
             scanner.nextLine()
         }
 
-        print("Cliente: ")
+        print("Nombre del Cliente: ")
         val cliente = scanner.nextLine()
 
         print("¿Es cliente frecuente? (s/n): ")
@@ -84,5 +85,27 @@ fun main() {
         i++
     }
 
-    println("\n Cálculos realizados internamente para ${listaVehiculos.size} vehículos.")
+    println("\n========================================")
+    println("        REPORTE FINAL DE PAGOS")
+    println("========================================")
+
+    for (v in listaVehiculos) {
+        println("\nPlaca: ${v.placa}")
+        println("Tipo: ${v.tipo.uppercase()}")
+        println("Horas: ${v.horas}")
+        println("Cliente: ${v.cliente} (Frecuente: ${if (v.esFrecuente) "SÍ" else "NO"})")
+        println("Tarifa Básica: S/ %.2f".format(v.tarifaBase))
+        println("----------------------------------------")
+        println("%-6s | %-8s | %-10s | %-8s".format("HORA", "TARIFA", "RECARGO", "IMPORTE"))
+        println("----------------------------------------")
+        for (d in v.detalles) {
+            println("%-6d | %-8.2f | %-9.0f%% | S/ %-6.2f".format(d.numeroHora, d.tarifaBase, d.recargoPorcentaje, d.importe))
+        }
+        println("----------------------------------------")
+        println("Subtotal:            S/ %.2f".format(v.subtotal))
+        if (v.esFrecuente) {
+            println("Descuento Frecuente: -S/ %.2f".format(v.descuento))
+        }
+        println("TOTAL A PAGAR:       S/ %.2f".format(v.total))
+    }
 }
