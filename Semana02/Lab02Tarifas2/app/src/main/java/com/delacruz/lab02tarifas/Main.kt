@@ -2,74 +2,39 @@ package com.delacruz.lab02tarifas
 
 import java.util.Scanner
 
-data class DetalleHora(val numeroHora: Int, val tarifaBase: Double, val recargoPorcentaje: Double, val importe: Double)
-
-data class VehiculoProcesado(
+data class Vehiculo(
     val placa: String,
     val tipo: String,
     val horas: Int,
     val cliente: String,
     val esFrecuente: Boolean,
-    val tarifaBase: Double,
-    val detalles: List<DetalleHora>,
-    val subtotal: Double,
-    val descuento: Double,
-    val total: Double
+    val tarifaBase: Double
 )
-
-fun calcularVehiculo(placa: String, tipo: String, horas: Int, cliente: String, esFrecuente: Boolean): VehiculoProcesado {
-    val tarifaBase = when (tipo) {
-        "moto" -> 2.0
-        "auto" -> 4.5
-        "camioneta" -> 10.0
-        else -> 0.0
-    }
-
-    val detalles = mutableListOf<DetalleHora>()
-    var subtotal = 0.0
-
-    for (h in 1..horas) {
-        val recargoPorcentaje = when {
-            h <= 2 -> 0.0
-            h in 3..5 -> 0.20
-            else -> 0.50
-        }
-        val importe = tarifaBase * (1 + recargoPorcentaje)
-        subtotal += importe
-        detalles.add(DetalleHora(h, tarifaBase, recargoPorcentaje * 100, importe))
-    }
-
-    val descuento = if (esFrecuente) subtotal * 0.10 else 0.0
-    val total = subtotal - descuento
-
-    return VehiculoProcesado(placa, tipo, horas, cliente, esFrecuente, tarifaBase, detalles, subtotal, descuento, total)
-}
 
 fun main() {
     val scanner = Scanner(System.`in`)
-    val listaVehiculos = mutableListOf<VehiculoProcesado>()
+    val listaVehiculos = mutableListOf<Vehiculo>()
 
+    println("=== COMMIT 1: INGRESO DE DATOS ===")
     print("¿Cuántos vehículos desea procesar?: ")
     val cantidad = scanner.nextInt()
     scanner.nextLine()
 
     var i = 1
     while (i <= cantidad) {
-        println("\n====================================")
-        println("       REGISTRO DE VEHÍCULO $i")
-        println("====================================")
-        print("Placa: ")
+        println("\n--- Vehículo $i ---")
+        print("Ingrese Placa: ")
         val placa = scanner.nextLine()
 
         var tipo = ""
-        while (tipo !in listOf("moto", "auto", "camioneta")) {
-            print("Tipo (moto / auto / camioneta): ")
+        while (tipo !in listOf("moto", "vehiculo", "auto", "camioneta", "trailer")) {
+            print("Ingrese Tipo (moto / vehiculo / camioneta / trailer): ")
             tipo = scanner.nextLine().lowercase()
         }
 
         var horas = 0
         while (horas < 1) {
-            print("Horas (mínimo 1): ")
+            print("Ingrese Horas (mínimo 1): ")
             horas = scanner.nextInt()
             scanner.nextLine()
         }
@@ -80,56 +45,17 @@ fun main() {
         print("¿Es cliente frecuente? (s/n): ")
         val esFrecuente = scanner.nextLine().lowercase() == "s"
 
-        val v = calcularVehiculo(placa, tipo, horas, cliente, esFrecuente)
-        listaVehiculos.add(v)
+        val tarifaBase = when (tipo) {
+            "moto" -> 2.0
+            "vehiculo", "auto" -> 4.0
+            "camioneta" -> 10.0
+            "trailer" -> 20.0
+            else -> 0.0
+        }
+
+        listaVehiculos.add(Vehiculo(placa, tipo, horas, cliente, esFrecuente, tarifaBase))
         i++
     }
 
-    // --- DETALLE INDIVIDUAL DE CADA VEHÍCULO ---
-    println("\n========================================")
-    println("        REPORTE DETALLADO DE PAGOS")
-    println("========================================")
-
-    for (v in listaVehiculos) {
-        println("\nPlaca: ${v.placa}")
-        println("Tipo: ${v.tipo.uppercase()}")
-        println("Horas: ${v.horas}")
-        println("Cliente: ${v.cliente} (Frecuente: ${if (v.esFrecuente) "SÍ" else "NO"})")
-        println("Tarifa Básica: S/ %.2f".format(v.tarifaBase))
-        println("----------------------------------------")
-        println("%-6s | %-8s | %-10s | %-8s".format("HORA", "TARIFA", "RECARGO", "IMPORTE"))
-        println("----------------------------------------")
-        for (d in v.detalles) {
-            println("%-6d | %-8.2f | %-9.0f%% | S/ %-6.2f".format(d.numeroHora, d.tarifaBase, d.recargoPorcentaje, d.importe))
-        }
-        println("----------------------------------------")
-        println("Subtotal:            S/ %.2f".format(v.subtotal))
-        if (v.esFrecuente) {
-            println("Descuento Frecuente: -S/ %.2f".format(v.descuento))
-        }
-        println("TOTAL A PAGAR:       S/ %.2f".format(v.total))
-    }
-
-    // --- RESUMEN DEL DÍA (EXIGIDO EN LA PIZARRA) ---
-    val totalMotos = listaVehiculos.count { it.tipo == "moto" }
-    val totalAutos = listaVehiculos.count { it.tipo == "auto" }
-    val totalCamionetas = listaVehiculos.count { it.tipo == "camioneta" }
-    val recaudacionTotal = listaVehiculos.sumOf { it.total }
-    val vehiculoMayor = listaVehiculos.maxByOrNull { it.total }
-
-    println("\n========================================")
-    println("             RESUMEN DEL DÍA            ")
-    println("========================================")
-    println("Vehículos: ${listaVehiculos.size}")
-    println("  - Motos:      $totalMotos")
-    println("  - Autos:      $totalAutos")
-    println("  - Camionetas: $totalCamionetas")
-    println()
-    println("Recaudación Total: S/ %.2f".format(recaudacionTotal))
-    if (vehiculoMayor != null) {
-        println("Vehículo con Mayor Pago:")
-        println("  - Placa: ${vehiculoMayor.placa}")
-        println("  - Monto: S/ %.2f".format(vehiculoMayor.total))
-    }
-    println("========================================")
+    println("\n[COMMIT 1 COMPLETADO]: ${listaVehiculos.size} vehículos registrados con éxito.")
 }
