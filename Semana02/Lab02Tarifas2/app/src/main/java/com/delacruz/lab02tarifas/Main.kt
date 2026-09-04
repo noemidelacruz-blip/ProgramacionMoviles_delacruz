@@ -130,7 +130,7 @@ fun main() {
                         tipo = scanner.nextLine().lowercase()
                     }
 
-                    // --- SOLICITUD DE HORAS CON MÍNIMO 1 Y MÁXIMO 24 ---
+                    // --- SOLICITUD DE HORAS EN RANGO 1 A 24 ---
                     var horas = 0
                     while (horas !in 1..24) {
                         print("Horas estimadas de permanencia (Mínimo: 1 - Máximo: 24): ")
@@ -186,13 +186,13 @@ fun main() {
                         println("----------------------------------------")
                         println("Subtotal Bruto:         S/ %.2f".format(vehiculoEncontrado.subtotal))
                         if (vehiculoEncontrado.esFrecuente) {
-                            println("Descuento Frecuente(10%):-S/ %.2f".format(vehiculoEncontrado.descuentoFrecuente))
+                            println("Descuento Frecuente(10%%): -S/ %.2f".format(vehiculoEncontrado.descuentoFrecuente))
                         }
                         if (vehiculoEncontrado.descuentoMontoAlto > 0) {
-                            println("Descuento >S/500 (20%): -S/ %.2f".format(vehiculoEncontrado.descuentoMontoAlto))
+                            println("Descuento >S/500 (20%%):  -S/ %.2f".format(vehiculoEncontrado.descuentoMontoAlto))
                         }
                         println("Base Imponible:         S/ %.2f".format(vehiculoEncontrado.baseImponible))
-                        println("IGV (18%%):               +S/ %.2f".format(vehiculoEncontrado.igv))
+                        println("IGV (18%%):              +S/ %.2f".format(vehiculoEncontrado.igv))
                         println("TOTAL A PAGAR:          S/ %.2f".format(vehiculoEncontrado.totalFinal))
                         println("========================================")
 
