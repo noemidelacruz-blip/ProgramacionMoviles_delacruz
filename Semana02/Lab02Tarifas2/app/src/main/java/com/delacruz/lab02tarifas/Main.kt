@@ -9,7 +9,7 @@ data class DetalleHora(
     val importe: Double
 )
 
-data class VehiculoCalculado(
+data class VehiculoProcesado(
     val placa: String,
     val tipo: String,
     val horas: Int,
@@ -20,10 +20,12 @@ data class VehiculoCalculado(
     val subtotal: Double,
     val descuentoFrecuente: Double,
     val descuentoMontoAlto: Double,
-    val totalBruto: Double
+    val baseImponible: Double,
+    val igv: Double,
+    val totalFinal: Double
 )
 
-fun calcularVehiculo(placa: String, tipo: String, horas: Int, cliente: String, esFrecuente: Boolean): VehiculoCalculado {
+fun calcularVehiculo(placa: String, tipo: String, horas: Int, cliente: String, esFrecuente: Boolean): VehiculoProcesado {
     val tarifaBase = when (tipo) {
         "moto" -> 2.0
         "vehiculo", "auto" -> 4.0
@@ -50,29 +52,29 @@ fun calcularVehiculo(placa: String, tipo: String, horas: Int, cliente: String, e
     val descuentoFrecuente = if (esFrecuente) subtotal * 0.10 else 0.0
     val subtotalConFrecuente = subtotal - descuentoFrecuente
     val descuentoMontoAlto = if (subtotalConFrecuente > 500.0) subtotalConFrecuente * 0.20 else 0.0
-    val totalBruto = subtotalConFrecuente - descuentoMontoAlto
 
-    return VehiculoCalculado(
-        placa, tipo, horas, cliente, esFrecuente, tarifaBase,
-        detalles, subtotal, descuentoFrecuente, descuentoMontoAlto, totalBruto
+    val baseImponible = subtotalConFrecuente - descuentoMontoAlto
+    val igv = baseImponible * 0.18
+    val totalFinal = baseImponible + igv
+
+    return VehiculoProcesado(
+        placa, tipo, horas, cliente, esFrecuente, tarifaBase, detalles,
+        subtotal, descuentoFrecuente, descuentoMontoAlto, baseImponible, igv, totalFinal
     )
 }
 
 fun main() {
     val scanner = Scanner(System.`in`)
-    val listaVehiculos = mutableListOf<VehiculoCalculado>()
 
-    println("=== COMMIT 2: CÁLCULOS, RECARGOS Y DESCUENTOS ===")
-
-    // Validar Aforo Máximo (1 a 10)
-    var aforo = 0
-    while (aforo !in 1..10) {
-        print("Ingrese la cantidad de vehículos a procesar (Aforo Máx. 10): ")
+    // --- EL CLIENTE INGRESA LIBREMENTE LA CAPACIDAD ---
+    var aforoMaximo = 0
+    while (aforoMaximo < 1) {
+        print("Ingrese la capacidad del estacionamiento: ")
         if (scanner.hasNextInt()) {
-            aforo = scanner.nextInt()
+            aforoMaximo = scanner.nextInt()
             scanner.nextLine()
-            if (aforo !in 1..10) {
-                println("❌ Error: El aforo no puede superar los 10 vehículos ni ser menor a 1.\n")
+            if (aforoMaximo < 1) {
+                println("❌ Error: La capacidad debe ser al menos 1.\n")
             }
         } else {
             println("❌ Error: Debe ingresar un número válido.\n")
@@ -80,35 +82,167 @@ fun main() {
         }
     }
 
-    var i = 1
-    while (i <= aforo) {
-        println("\n--- Vehículo $i / $aforo ---")
-        print("Placa: ")
-        val placa = scanner.nextLine()
+    // Lista de vehículos estacionados actualmente
+    val vehiculosEstacionados = mutableListOf<VehiculoProcesado>()
 
-        var tipo = ""
-        while (tipo !in listOf("moto", "vehiculo", "auto", "camioneta", "trailer")) {
-            print("Tipo (moto / vehiculo / camioneta / trailer): ")
-            tipo = scanner.nextLine().lowercase()
-        }
+    // Historial acumulado de cobros
+    val historialCobrados = mutableListOf<VehiculoProcesado>()
 
-        var horas = 0
-        while (horas < 1) {
-            print("Horas (mínimo 1): ")
-            horas = scanner.nextInt()
+    var opcion = 0
+
+    while (opcion != 4) {
+        val ocupacionActual = vehiculosEstacionados.size
+        val espaciosDisponibles = aforoMaximo - ocupacionActual
+
+        println("\n==================================================")
+        println("       SISTEMA DE CONTROL DE ESTACIONAMIENTO")
+        println("  Ocupación: $ocupacionActual / $aforoMaximo  |  Disponibles: $espaciosDisponibles")
+        println("==================================================")
+        println("1. Registrar Ingreso de Vehículo")
+        println("2. Registrar Retiro y Cobro de Vehículo")
+        println("3. Ver Vehículos Estacionados Actualmente")
+        println("4. Cerrar Día y Ver Resumen Final")
+        print("Seleccione una opción (1-4): ")
+
+        if (scanner.hasNextInt()) {
+            opcion = scanner.nextInt()
             scanner.nextLine()
+        } else {
+            println("❌ Opción no válida.")
+            scanner.nextLine()
+            continue
         }
 
-        print("Nombre del Cliente: ")
-        val cliente = scanner.nextLine()
+        when (opcion) {
+            1 -> {
+                // --- OPCIÓN 1: INGRESO ---
+                if (vehiculosEstacionados.size >= aforoMaximo) {
+                    println("\n⛔ ¡AFORO LLENO! Se alcanzó la capacidad máxima de $aforoMaximo vehículos.")
+                } else {
+                    println("\n--- REGISTRAR INGRESO ---")
+                    print("Placa: ")
+                    val placa = scanner.nextLine().uppercase()
 
-        print("¿Es cliente frecuente? (s/n): ")
-        val esFrecuente = scanner.nextLine().lowercase() == "s"
+                    if (vehiculosEstacionados.any { it.placa == placa }) {
+                        println("❌ Error: El vehículo con placa $placa ya está adentro.")
+                        continue
+                    }
 
-        val v = calcularVehiculo(placa, tipo, horas, cliente, esFrecuente)
-        listaVehiculos.add(v)
-        i++
+                    var tipo = ""
+                    while (tipo !in listOf("moto", "vehiculo", "auto", "camioneta", "trailer")) {
+                        print("Tipo (moto / vehiculo / camioneta / trailer): ")
+                        tipo = scanner.nextLine().lowercase()
+                    }
+
+                    var horas = 0
+                    while (horas < 1) {
+                        print("Horas estimadas de permanencia: ")
+                        horas = scanner.nextInt()
+                        scanner.nextLine()
+                    }
+
+                    print("Nombre del Cliente: ")
+                    val cliente = scanner.nextLine()
+
+                    print("¿Es cliente frecuente? (s/n): ")
+                    val esFrecuente = scanner.nextLine().lowercase() == "s"
+
+                    val v = calcularVehiculo(placa, tipo, horas, cliente, esFrecuente)
+                    vehiculosEstacionados.add(v)
+                    println("✅ Vehículo $placa ingresado. Ocupación: ${vehiculosEstacionados.size}/$aforoMaximo")
+                }
+            }
+
+            2 -> {
+                // --- OPCIÓN 2: RETIRO Y COBRO ---
+                if (vehiculosEstacionados.isEmpty()) {
+                    println("\nℹ️ No hay vehículos estacionados actualmente.")
+                } else {
+                    println("\n--- REGISTRAR RETIRO Y COBRO ---")
+                    print("Ingrese la placa del vehículo a retirar: ")
+                    val placaBuscada = scanner.nextLine().uppercase()
+
+                    val vehiculoEncontrado = vehiculosEstacionados.find { it.placa == placaBuscada }
+
+                    if (vehiculoEncontrado != null) {
+                        println("\n========================================")
+                        println("          BOLETA DE LIQUIDACIÓN")
+                        println("========================================")
+                        println("Placa: ${vehiculoEncontrado.placa}")
+                        println("Tipo: ${vehiculoEncontrado.tipo.uppercase()}")
+                        println("Horas: ${vehiculoEncontrado.horas}")
+                        println("Cliente: ${vehiculoEncontrado.cliente} (Frecuente: ${if (vehiculoEncontrado.esFrecuente) "SÍ" else "NO"})")
+                        println("Tarifa Básica: S/ %.2f".format(vehiculoEncontrado.tarifaBase))
+                        println("----------------------------------------")
+                        println("%-6s | %-8s | %-10s | %-8s".format("HORA", "TARIFA", "RECARGO", "IMPORTE"))
+                        println("----------------------------------------")
+                        for (d in vehiculoEncontrado.detalles) {
+                            println("%-6d | %-8.2f | %-9.0f%% | S/ %-6.2f".format(d.numeroHora, d.tarifaBase, d.recargoPorcentaje, d.importe))
+                        }
+                        println("----------------------------------------")
+                        println("Subtotal Bruto:         S/ %.2f".format(vehiculoEncontrado.subtotal))
+                        if (vehiculoEncontrado.esFrecuente) {
+                            println("Descuento Frecuente(10%):-S/ %.2f".format(vehiculoEncontrado.descuentoFrecuente))
+                        }
+                        if (vehiculoEncontrado.descuentoMontoAlto > 0) {
+                            println("Descuento >S/500 (20%): -S/ %.2f".format(vehiculoEncontrado.descuentoMontoAlto))
+                        }
+                        println("Base Imponible:         S/ %.2f".format(vehiculoEncontrado.baseImponible))
+                        println("IGV (18%%):               +S/ %.2f".format(vehiculoEncontrado.igv))
+                        println("TOTAL A PAGAR:          S/ %.2f".format(vehiculoEncontrado.totalFinal))
+                        println("========================================")
+
+                        vehiculosEstacionados.remove(vehiculoEncontrado)
+                        historialCobrados.add(vehiculoEncontrado)
+                        println("🚗 Vehículo $placaBuscada retirado. Libres: ${aforoMaximo - vehiculosEstacionados.size}")
+
+                    } else {
+                        println("❌ No se encontró la placa $placaBuscada.")
+                    }
+                }
+            }
+
+            3 -> {
+                // --- OPCIÓN 3: ESTADO ACTUAL ---
+                if (vehiculosEstacionados.isEmpty()) {
+                    println("\nℹ️ El estacionamiento está vacío.")
+                } else {
+                    println("\n--- VEHÍCULOS ESTACIONADOS (${vehiculosEstacionados.size}/$aforoMaximo) ---")
+                    for (v in vehiculosEstacionados) {
+                        println(" • Placa: ${v.placa} | Tipo: ${v.tipo.uppercase()} | Horas: ${v.horas} | Cliente: ${v.cliente}")
+                    }
+                }
+            }
+
+            4 -> println("\nCerrando operaciones...")
+
+            else -> println("❌ Opción inválida.")
+        }
     }
 
-    println("\n[COMMIT 2 COMPLETADO]: Cálculos de recargos y regla de descuento > S/ 500 procesados internamente.")
+    // --- RESUMEN FINAL ---
+    val totalMotos = historialCobrados.count { it.tipo == "moto" }
+    val totalVehiculos = historialCobrados.count { it.tipo in listOf("vehiculo", "auto") }
+    val totalCamionetas = historialCobrados.count { it.tipo == "camioneta" }
+    val totalTrailers = historialCobrados.count { it.tipo == "trailer" }
+    val recaudacionTotal = historialCobrados.sumOf { it.totalFinal }
+    val vehiculoMayor = historialCobrados.maxByOrNull { it.totalFinal }
+
+    println("\n========================================")
+    println("          RESUMEN FINAL DEL DÍA         ")
+    println("========================================")
+    println("Capacidad del Estacionamiento: $aforoMaximo")
+    println("Vehículos Cobrados: ${historialCobrados.size}")
+    println("  - Motos:      $totalMotos")
+    println("  - Vehículos:  $totalVehiculos")
+    println("  - Camionetas: $totalCamionetas")
+    println("  - Tráilers:   $totalTrailers")
+    println()
+    println("Recaudación Total: S/ %.2f".format(recaudacionTotal))
+    if (vehiculoMayor != null) {
+        println("----------------------------------------")
+        println("Vehículo con Mayor Pago:")
+        println("  - Placa: ${vehiculoMayor.placa} | Monto: S/ %.2f".format(vehiculoMayor.totalFinal))
+    }
+    println("========================================")
 }
