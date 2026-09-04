@@ -85,8 +85,9 @@ fun main() {
         i++
     }
 
+    // --- DETALLE INDIVIDUAL DE CADA VEHÍCULO ---
     println("\n========================================")
-    println("        REPORTE FINAL DE PAGOS")
+    println("        REPORTE DETALLADO DE PAGOS")
     println("========================================")
 
     for (v in listaVehiculos) {
@@ -108,4 +109,27 @@ fun main() {
         }
         println("TOTAL A PAGAR:       S/ %.2f".format(v.total))
     }
+
+    // --- RESUMEN DEL DÍA (EXIGIDO EN LA PIZARRA) ---
+    val totalMotos = listaVehiculos.count { it.tipo == "moto" }
+    val totalAutos = listaVehiculos.count { it.tipo == "auto" }
+    val totalCamionetas = listaVehiculos.count { it.tipo == "camioneta" }
+    val recaudacionTotal = listaVehiculos.sumOf { it.total }
+    val vehiculoMayor = listaVehiculos.maxByOrNull { it.total }
+
+    println("\n========================================")
+    println("             RESUMEN DEL DÍA            ")
+    println("========================================")
+    println("Vehículos: ${listaVehiculos.size}")
+    println("  - Motos:      $totalMotos")
+    println("  - Autos:      $totalAutos")
+    println("  - Camionetas: $totalCamionetas")
+    println()
+    println("Recaudación Total: S/ %.2f".format(recaudacionTotal))
+    if (vehiculoMayor != null) {
+        println("Vehículo con Mayor Pago:")
+        println("  - Placa: ${vehiculoMayor.placa}")
+        println("  - Monto: S/ %.2f".format(vehiculoMayor.total))
+    }
+    println("========================================")
 }
