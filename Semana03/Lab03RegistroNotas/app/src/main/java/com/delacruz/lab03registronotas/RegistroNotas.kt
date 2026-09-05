@@ -20,10 +20,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,11 +44,14 @@ fun RegistroNotas() {
     val purpleTextLight = Color(0xFF79747E)
     val purpleBadge = Color(0xFFE8DEF8)
 
-    // Estados para las notas de cada curso (0 a 20)
+    // Estados para las notas de cada curso
     var notaFundamentos by remember { mutableFloatStateOf(0f) }
     var notaPoo by remember { mutableFloatStateOf(0f) }
     var notaMoviles by remember { mutableFloatStateOf(0f) }
     var notaBd by remember { mutableFloatStateOf(0f) }
+
+    // Estado para el Switch
+    var redondearPromedio by remember { mutableStateOf(false) }
 
     // Fondo degradado
     val backgroundGradient = Brush.verticalGradient(
@@ -61,7 +67,7 @@ fun RegistroNotas() {
             .background(backgroundGradient)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // Barra superior morada con tu estructura original
+            // Barra superior
             Spacer(
                 modifier = Modifier
                     .windowInsetsTopHeight(WindowInsets.statusBars)
@@ -103,7 +109,7 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Curso 1
+                // Cursos con Sliders
                 ItemCursoSlider(
                     nombre = "Fundamentos de Programación",
                     porcentaje = "(20%)",
@@ -114,7 +120,6 @@ fun RegistroNotas() {
                     thumbColor = purplePrimary
                 )
 
-                // Curso 2
                 ItemCursoSlider(
                     nombre = "Programación Orientada a Objetos",
                     porcentaje = "(25%)",
@@ -125,7 +130,6 @@ fun RegistroNotas() {
                     thumbColor = purplePrimary
                 )
 
-                // Curso 3
                 ItemCursoSlider(
                     nombre = "Programación en Móviles",
                     porcentaje = "(30%)",
@@ -136,7 +140,6 @@ fun RegistroNotas() {
                     thumbColor = purplePrimary
                 )
 
-                // Curso 4
                 ItemCursoSlider(
                     nombre = "Base de Datos",
                     porcentaje = "(25%)",
@@ -146,6 +149,29 @@ fun RegistroNotas() {
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
                 )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Switch: Redondear promedio final
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Redondear promedio final",
+                        fontSize = 14.sp,
+                        color = Color.DarkGray
+                    )
+                    Switch(
+                        checked = redondearPromedio,
+                        onCheckedChange = { redondearPromedio = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = purplePrimary
+                        )
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
@@ -182,7 +208,6 @@ fun ItemCursoSlider(
                     color = purpleText
                 )
             }
-            // Badge para la nota
             Surface(
                 color = badgeColor,
                 shape = RoundedCornerShape(12.dp)
