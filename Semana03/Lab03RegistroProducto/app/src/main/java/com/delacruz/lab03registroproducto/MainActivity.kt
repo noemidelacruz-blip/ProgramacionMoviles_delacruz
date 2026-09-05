@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,10 +25,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,6 +40,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.delacruz.lab03registroproducto.ui.theme.Lab03RegistroProductoTheme
+
+data class Producto(
+    val nombre: String,
+    val precio: Double,
+    val cantidad: Int
+)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +65,9 @@ fun PantallaRegistro() {
     var nombre by remember { mutableStateOf("") }
     var precio by remember { mutableStateOf("") }
     var cantidad by remember { mutableStateOf("") }
-    var mostrarResumen by remember { mutableStateOf(false) }
+
+    // Lista acumulativa para conservar todos los productos registrados
+    val listaProductos = remember { mutableStateListOf<Producto>() }
     var mensajeError by remember { mutableStateOf("") }
 
     Scaffold(
@@ -94,7 +107,7 @@ fun PantallaRegistro() {
                     color = MaterialTheme.colorScheme.outline
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
                     value = nombre,
@@ -103,7 +116,7 @@ fun PantallaRegistro() {
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
@@ -112,7 +125,7 @@ fun PantallaRegistro() {
                         label = { Text("Precio (S/)") },
                         modifier = Modifier.weight(1f)
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
                     OutlinedTextField(
                         value = cantidad,
                         onValueChange = { cantidad = it },
@@ -121,35 +134,37 @@ fun PantallaRegistro() {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Button(
                         onClick = {
+                            val precioNum = precio.toDoubleOrNull()
+                            val cantidadNum = cantidad.toIntOrNull()
+
                             if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
                                 mensajeError = "Por favor completa todos los campos"
-                                mostrarResumen = false
-                            } else if (precio.toDoubleOrNull() == null || cantidad.toIntOrNull() == null) {
+                            } else if (precioNum == null || cantidadNum == null) {
                                 mensajeError = "Ingresa montos numéricos válidos"
-                                mostrarResumen = false
                             } else {
                                 mensajeError = ""
-                                mostrarResumen = true
+                                // Agrega el producto a la lista acumulativa
+                                listaProductos.add(Producto(nombre, precioNum, cantidadNum))
                             }
                         },
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("AGREGAR")
+                        Text("AGREGAR PRODUCTO")
                     }
 
                     Spacer(modifier = Modifier.width(12.dp))
 
+                    // EL BOTÓN LIMPIAR RESTAURA SU FUNCIÓN PARA VACIAR LOS INPUTS MANUALLY
                     OutlinedButton(
                         onClick = {
                             nombre = ""
                             precio = ""
                             cantidad = ""
-                            mostrarResumen = false
                             mensajeError = ""
                         },
                         modifier = Modifier.weight(1f)
@@ -158,7 +173,7 @@ fun PantallaRegistro() {
                     }
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 if (mensajeError.isNotEmpty()) {
                     Text(
@@ -167,49 +182,58 @@ fun PantallaRegistro() {
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
-                } else if (!mostrarResumen) {
-                    Text(
-                        text = "Aún no has registrado ningún producto",
-                        color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                } else {
-                    val precioNum = precio.toDoubleOrNull() ?: 0.0
-                    val cantidadNum = cantidad.toIntOrNull() ?: 0
-                    val importe = precioNum * cantidadNum
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
 
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                if (listaProductos.isEmpty()) {
+                    if (mensajeError.isEmpty()) {
+                        Text(
+                            text = "Aún no has registrado ningún producto",
+                            color = MaterialTheme.colorScheme.outline,
+                            style = MaterialTheme.typography.bodyMedium
                         )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = nombre,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = "Precio: S/ " + String.format("%.2f", precioNum))
-                            Text(text = "Cantidad: $cantidadNum")
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "Importe total: S/ " + String.format("%.2f", importe),
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
-                            )
+                        itemsIndexed(listaProductos) { index, prod ->
+                            val importe = prod.precio * prod.cantidad
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                                )
+                            ) {
+                                Column(modifier = Modifier.padding(12.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = prod.nombre,
+                                            style = MaterialTheme.typography.titleMedium,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        TextButton(onClick = { listaProductos.removeAt(index) }) {
+                                            Text("Eliminar", color = MaterialTheme.colorScheme.error)
+                                        }
+                                    }
+                                    Text(text = "Precio: S/ " + String.format("%.2f", prod.precio))
+                                    Text(text = "Cantidad: ${prod.cantidad}")
+                                    Text(
+                                        text = "Importe total: S/ " + String.format("%.2f", importe),
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Text(
-                        text = "✓ Producto registrado correctamente",
-                        color = Color(0xFF2E7D32),
-                        fontWeight = FontWeight.Medium,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
                 }
             }
 
@@ -219,7 +243,7 @@ fun PantallaRegistro() {
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 12.dp)
+                    .padding(bottom = 8.dp)
             )
         }
     }
