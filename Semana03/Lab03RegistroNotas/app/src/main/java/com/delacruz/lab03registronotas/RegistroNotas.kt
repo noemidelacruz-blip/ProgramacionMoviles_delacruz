@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -48,7 +51,7 @@ fun RegistroNotas() {
     val purpleTextLight = Color(0xFF79747E)
     val purpleBadge = Color(0xFFE8DEF8)
 
-    // Estados para las notas de cada curso
+    // Estados para las notas
     var notaFundamentos by remember { mutableFloatStateOf(0f) }
     var notaPoo by remember { mutableFloatStateOf(0f) }
     var notaMoviles by remember { mutableFloatStateOf(0f) }
@@ -57,6 +60,9 @@ fun RegistroNotas() {
     // Estados para Switch y Checkbox
     var redondearPromedio by remember { mutableStateOf(false) }
     var notasConfirmadas by remember { mutableStateOf(false) }
+
+    // Estado para controlar si ya se hizo clic en CALCULAR
+    var calculado by remember { mutableStateOf(false) }
 
     // Fondo degradado
     val backgroundGradient = Brush.verticalGradient(
@@ -87,11 +93,11 @@ fun RegistroNotas() {
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
-                    modifier = Modifier.padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 20.dp)
+                    modifier = Modifier.padding(20.dp)
                 )
             }
 
-            // Cuerpo principal con scroll
+            // Cuerpo principal
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -114,12 +120,15 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Cursos con Sliders
+                // Sliders de Cursos (al cambiar el valor reseteamos 'calculado')
                 ItemCursoSlider(
                     nombre = "Fundamentos de Programación",
                     porcentaje = "(20%)",
                     valor = notaFundamentos,
-                    onValueChange = { notaFundamentos = it },
+                    onValueChange = {
+                        notaFundamentos = it
+                        calculado = false
+                    },
                     badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
@@ -129,7 +138,10 @@ fun RegistroNotas() {
                     nombre = "Programación Orientada a Objetos",
                     porcentaje = "(25%)",
                     valor = notaPoo,
-                    onValueChange = { notaPoo = it },
+                    onValueChange = {
+                        notaPoo = it
+                        calculado = false
+                    },
                     badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
@@ -139,7 +151,10 @@ fun RegistroNotas() {
                     nombre = "Programación en Móviles",
                     porcentaje = "(30%)",
                     valor = notaMoviles,
-                    onValueChange = { notaMoviles = it },
+                    onValueChange = {
+                        notaMoviles = it
+                        calculado = false
+                    },
                     badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
@@ -149,7 +164,10 @@ fun RegistroNotas() {
                     nombre = "Base de Datos",
                     porcentaje = "(25%)",
                     valor = notaBd,
-                    onValueChange = { notaBd = it },
+                    onValueChange = {
+                        notaBd = it
+                        calculado = false
+                    },
                     badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
@@ -157,7 +175,7 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Switch: Redondear promedio final
+                // Switch
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -170,7 +188,10 @@ fun RegistroNotas() {
                     )
                     Switch(
                         checked = redondearPromedio,
-                        onCheckedChange = { redondearPromedio = it },
+                        onCheckedChange = {
+                            redondearPromedio = it
+                            calculado = false
+                        },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = purplePrimary
@@ -178,14 +199,17 @@ fun RegistroNotas() {
                     )
                 }
 
-                // Checkbox: Confirmar notas
+                // Checkbox
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
                         checked = notasConfirmadas,
-                        onCheckedChange = { notasConfirmadas = it }
+                        onCheckedChange = {
+                            notasConfirmadas = it
+                            if (!it) calculado = false
+                        }
                     )
                     Text(
                         text = "Confirmo que las notas son correctas",
@@ -196,9 +220,9 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Botón CALCULAR PROMEDIO
+                // Botón
                 Button(
-                    onClick = { /* Lógica de cálculo en el siguiente requerimiento */ },
+                    onClick = { calculado = true },
                     enabled = notasConfirmadas,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -219,14 +243,91 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Mensaje previo antes de presionar el botón (Requerimiento 6)
-                Text(
-                    text = "Asigna las notas y confirma para calcular",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontSize = 13.sp,
-                    color = Color.DarkGray
-                )
+                // Área de Resultados o Mensaje Previo
+                if (!calculado) {
+                    Text(
+                        text = "Asigna las notas y confirma para calcular",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 13.sp,
+                        color = Color.DarkGray
+                    )
+                } else {
+                    // CÁLCULOS SOLO CUANDO SE HA HECHO CLIC EN EL BOTÓN
+                    val f = notaFundamentos.roundToInt() * 0.20f
+                    val p = notaPoo.roundToInt() * 0.25f
+                    val m = notaMoviles.roundToInt() * 0.30f
+                    val b = notaBd.roundToInt() * 0.25f
+                    val totalPonderado = f + p + m + b
+
+                    val promedioFinalTexto = if (redondearPromedio) {
+                        "${totalPonderado.roundToInt()}"
+                    } else {
+                        String.format(Locale.US, "%.2f", totalPonderado)
+                    }
+
+                    val promedioEvaluar = if (redondearPromedio) totalPonderado.roundToInt().toFloat() else totalPonderado
+
+                    val (obsTexto, obsTextColor, obsBgColor) = when {
+                        promedioEvaluar >= 18f -> Triple("EXCELENTE", Color(0xFF0B421A), Color(0xFFC8E6C9))
+                        promedioEvaluar >= 13f -> Triple("APROBADO", Color(0xFF388E3C), Color(0xFFE8F5E9))
+                        promedioEvaluar >= 10f -> Triple("EN RECUPERACIÓN", Color(0xFFB56500), Color(0xFFFFF8E1))
+                        else -> Triple("DESAPROBADO", Color(0xFFC62828), Color(0xFFFFEBEE))
+                    }
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = "Resultados",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                                color = Color.Black
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "Promedio ponderado: ${String.format(Locale.US, "%.2f", totalPonderado)}",
+                                fontSize = 14.sp,
+                                color = Color.DarkGray
+                            )
+
+                            Text(
+                                text = "Promedio final: $promedioFinalTexto",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.Black
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "Observación: ",
+                                    fontSize = 14.sp,
+                                    color = Color.DarkGray
+                                )
+                                Surface(
+                                    color = obsBgColor,
+                                    shape = RoundedCornerShape(12.dp)
+                                ) {
+                                    Text(
+                                        text = obsTexto,
+                                        color = obsTextColor,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp,
+                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
