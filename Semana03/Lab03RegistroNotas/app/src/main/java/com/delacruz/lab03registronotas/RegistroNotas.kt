@@ -22,6 +22,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
@@ -49,9 +50,8 @@ import kotlin.math.roundToInt
 fun RegistroNotas() {
     val purplePrimary = Color(0xFF65558F)
     val purpleTextLight = Color(0xFF79747E)
-    val purpleBadge = Color(0xFFE8DEF8)
 
-    // Estados para las notas
+    // Estados para las notas de cada curso
     var notaFundamentos by remember { mutableFloatStateOf(0f) }
     var notaPoo by remember { mutableFloatStateOf(0f) }
     var notaMoviles by remember { mutableFloatStateOf(0f) }
@@ -61,10 +61,10 @@ fun RegistroNotas() {
     var redondearPromedio by remember { mutableStateOf(false) }
     var notasConfirmadas by remember { mutableStateOf(false) }
 
-    // Estado para controlar si ya se hizo clic en CALCULAR
+    // Estado para controlar la visibilidad del cálculo
     var calculado by remember { mutableStateOf(false) }
 
-    // Fondo degradado
+    // Fondo degradado suave
     val backgroundGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFFCBB2FF),
@@ -78,7 +78,7 @@ fun RegistroNotas() {
             .background(backgroundGradient)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // Barra superior
+            // Barra superior "Registro de Notas"
             Spacer(
                 modifier = Modifier
                     .windowInsetsTopHeight(WindowInsets.statusBars)
@@ -97,7 +97,7 @@ fun RegistroNotas() {
                 )
             }
 
-            // Cuerpo principal con scroll
+            // Contenido principal con scroll
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -120,7 +120,7 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sliders de Cursos
+                // Sliders de Cursos lisos con redondeo exacto
                 ItemCursoSlider(
                     nombre = "Fundamentos de Programación",
                     porcentaje = "(20%)",
@@ -129,7 +129,6 @@ fun RegistroNotas() {
                         notaFundamentos = it
                         calculado = false
                     },
-                    badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
                 )
@@ -142,7 +141,6 @@ fun RegistroNotas() {
                         notaPoo = it
                         calculado = false
                     },
-                    badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
                 )
@@ -155,7 +153,6 @@ fun RegistroNotas() {
                         notaMoviles = it
                         calculado = false
                     },
-                    badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
                 )
@@ -168,14 +165,13 @@ fun RegistroNotas() {
                         notaBd = it
                         calculado = false
                     },
-                    badgeColor = purpleBadge,
                     purpleText = purpleTextLight,
                     thumbColor = purplePrimary
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Switch
+                // Switch de Redondeo
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -199,7 +195,7 @@ fun RegistroNotas() {
                     )
                 }
 
-                // Checkbox
+                // Checkbox de Confirmación
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -220,7 +216,7 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Botón
+                // Botón CALCULAR PROMEDIO
                 Button(
                     onClick = { calculado = true },
                     enabled = notasConfirmadas,
@@ -241,6 +237,26 @@ fun RegistroNotas() {
                     )
                 }
 
+                // Reto Opcional: Botón LIMPIAR
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = {
+                        notaFundamentos = 0f
+                        notaPoo = 0f
+                        notaMoviles = 0f
+                        notaBd = 0f
+                        redondearPromedio = false
+                        notasConfirmadas = false
+                        calculado = false
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(44.dp),
+                    shape = RoundedCornerShape(24.dp)
+                ) {
+                    Text(text = "LIMPIAR CAMPOS", fontSize = 13.sp, color = purplePrimary)
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Área de Resultados o Mensaje Previo
@@ -253,11 +269,11 @@ fun RegistroNotas() {
                         color = Color.DarkGray
                     )
                 } else {
-                    val f = notaFundamentos.roundToInt() * 0.20f
-                    val p = notaPoo.roundToInt() * 0.25f
-                    val m = notaMoviles.roundToInt() * 0.30f
-                    val b = notaBd.roundToInt() * 0.25f
-                    val totalPonderado = f + p + m + b
+                    val apFund = notaFundamentos.roundToInt() * 0.20f
+                    val apPoo = notaPoo.roundToInt() * 0.25f
+                    val apMov = notaMoviles.roundToInt() * 0.30f
+                    val apBd = notaBd.roundToInt() * 0.25f
+                    val totalPonderado = apFund + apPoo + apMov + apBd
 
                     val promedioFinalTexto = if (redondearPromedio) {
                         "${totalPonderado.roundToInt()}"
@@ -267,14 +283,14 @@ fun RegistroNotas() {
 
                     val promedioEvaluar = if (redondearPromedio) totalPonderado.roundToInt().toFloat() else totalPonderado
 
+                    // Estructura WHEN con colores exactos según reglas de negocio
                     val (obsTexto, obsTextColor, obsBgColor) = when {
-                        promedioEvaluar >= 18f -> Triple("EXCELENTE", Color(0xFF0B421A), Color(0xFFC8E6C9))
+                        promedioEvaluar >= 17f -> Triple("EXCELENTE", Color(0xFF0B421A), Color(0xFFC8E6C9))
                         promedioEvaluar >= 13f -> Triple("APROBADO", Color(0xFF2E7D32), Color(0xFFE8F5E9))
                         promedioEvaluar >= 10f -> Triple("EN RECUPERACIÓN", Color(0xFFB56500), Color(0xFFFFF8E1))
                         else -> Triple("DESAPROBADO", Color(0xFFC62828), Color(0xFFFFEBEE))
                     }
 
-                    // Tarjeta de Resultados (Dentro solo van los datos)
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
@@ -282,6 +298,20 @@ fun RegistroNotas() {
                         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
+                            // Reto Opcional: Aporte por curso
+                            Text(
+                                text = "Aportes por curso:",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Gray
+                            )
+                            Text(text = "• Fundamentos: ${notaFundamentos.roundToInt()} × 20% = ${String.format(Locale.US, "%.2f", apFund)}", fontSize = 11.sp, color = Color.DarkGray)
+                            Text(text = "• POO: ${notaPoo.roundToInt()} × 25% = ${String.format(Locale.US, "%.2f", apPoo)}", fontSize = 11.sp, color = Color.DarkGray)
+                            Text(text = "• Móviles: ${notaMoviles.roundToInt()} × 30% = ${String.format(Locale.US, "%.2f", apMov)}", fontSize = 11.sp, color = Color.DarkGray)
+                            Text(text = "• BD: ${notaBd.roundToInt()} × 25% = ${String.format(Locale.US, "%.2f", apBd)}", fontSize = 11.sp, color = Color.DarkGray)
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
                             Text(
                                 text = "Promedio ponderado: ${String.format(Locale.US, "%.2f", totalPonderado)}",
                                 fontSize = 14.sp,
@@ -323,7 +353,6 @@ fun RegistroNotas() {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Mensaje fuera de la tarjeta
                     Text(
                         text = "✓ Promedio calculado correctamente",
                         modifier = Modifier.fillMaxWidth(),
@@ -356,10 +385,18 @@ fun ItemCursoSlider(
     porcentaje: String,
     valor: Float,
     onValueChange: (Float) -> Unit,
-    badgeColor: Color,
     purpleText: Color,
     thumbColor: Color
 ) {
+    val notaEntera = valor.roundToInt()
+
+    // Reto Opcional: Semáforo en Badge (< 13 Rojo, >= 13 Verde)
+    val (badgeBg, badgeText) = if (notaEntera < 13) {
+        Pair(Color(0xFFFFEBEE), Color(0xFFC62828))
+    } else {
+        Pair(Color(0xFFE8F5E9), Color(0xFF2E7D32))
+    }
+
     Column(modifier = Modifier.padding(vertical = 4.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -380,21 +417,25 @@ fun ItemCursoSlider(
                 )
             }
             Surface(
-                color = badgeColor,
+                color = badgeBg,
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text = "${valor.roundToInt()}",
+                    text = "$notaEntera",
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
+                    color = badgeText,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
                 )
             }
         }
 
+        // Slider liso sin 'steps' pero redondeando estrictamente a enteros (0..20)
         Slider(
             value = valor,
-            onValueChange = onValueChange,
+            onValueChange = { nuevoValor ->
+                onValueChange(nuevoValor.roundToInt().toFloat())
+            },
             valueRange = 0f..20f,
             colors = SliderDefaults.colors(
                 thumbColor = thumbColor,
