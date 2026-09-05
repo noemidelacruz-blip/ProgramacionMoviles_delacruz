@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.roundToInt
@@ -195,9 +196,9 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Botón deshabilitado si no se marca el Checkbox
+                // Botón CALCULAR PROMEDIO
                 Button(
-                    onClick = { /* Lógica pendiente para requerimientos siguientes */ },
+                    onClick = { /* Lógica de cálculo en el siguiente requerimiento */ },
                     enabled = notasConfirmadas,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -215,6 +216,17 @@ fun RegistroNotas() {
                         fontSize = 14.sp
                     )
                 }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Mensaje previo antes de presionar el botón (Requerimiento 6)
+                Text(
+                    text = "Asigna las notas y confirma para calcular",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 13.sp,
+                    color = Color.DarkGray
+                )
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
