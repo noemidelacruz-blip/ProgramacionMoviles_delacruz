@@ -97,10 +97,10 @@ fun RegistroNotas() {
                 )
             }
 
-            // Cuerpo principal
+            // Cuerpo principal con scroll
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
                     .padding(horizontal = 20.dp)
                     .verticalScroll(rememberScrollState())
             ) {
@@ -120,7 +120,7 @@ fun RegistroNotas() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sliders de Cursos (al cambiar el valor reseteamos 'calculado')
+                // Sliders de Cursos
                 ItemCursoSlider(
                     nombre = "Fundamentos de Programación",
                     porcentaje = "(20%)",
@@ -253,7 +253,6 @@ fun RegistroNotas() {
                         color = Color.DarkGray
                     )
                 } else {
-                    // CÁLCULOS SOLO CUANDO SE HA HECHO CLIC EN EL BOTÓN
                     val f = notaFundamentos.roundToInt() * 0.20f
                     val p = notaPoo.roundToInt() * 0.25f
                     val m = notaMoviles.roundToInt() * 0.30f
@@ -270,11 +269,12 @@ fun RegistroNotas() {
 
                     val (obsTexto, obsTextColor, obsBgColor) = when {
                         promedioEvaluar >= 18f -> Triple("EXCELENTE", Color(0xFF0B421A), Color(0xFFC8E6C9))
-                        promedioEvaluar >= 13f -> Triple("APROBADO", Color(0xFF388E3C), Color(0xFFE8F5E9))
+                        promedioEvaluar >= 13f -> Triple("APROBADO", Color(0xFF2E7D32), Color(0xFFE8F5E9))
                         promedioEvaluar >= 10f -> Triple("EN RECUPERACIÓN", Color(0xFFB56500), Color(0xFFFFF8E1))
                         else -> Triple("DESAPROBADO", Color(0xFFC62828), Color(0xFFFFEBEE))
                     }
 
+                    // Tarjeta de Resultados (Dentro solo van los datos)
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
@@ -283,51 +283,66 @@ fun RegistroNotas() {
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
-                                text = "Resultados",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp,
-                                color = Color.Black
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
                                 text = "Promedio ponderado: ${String.format(Locale.US, "%.2f", totalPonderado)}",
                                 fontSize = 14.sp,
                                 color = Color.DarkGray
                             )
 
+                            Spacer(modifier = Modifier.height(4.dp))
+
                             Text(
                                 text = "Promedio final: $promedioFinalTexto",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color.Black
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = purplePrimary
                             )
+                            if (redondearPromedio) {
+                                Text(
+                                    text = "(redondeado)",
+                                    fontSize = 11.sp,
+                                    color = Color.Gray
+                                )
+                            }
 
                             Spacer(modifier = Modifier.height(12.dp))
 
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Surface(
+                                color = obsBgColor,
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
                                 Text(
-                                    text = "Observación: ",
-                                    fontSize = 14.sp,
-                                    color = Color.DarkGray
+                                    text = obsTexto,
+                                    color = obsTextColor,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
                                 )
-                                Surface(
-                                    color = obsBgColor,
-                                    shape = RoundedCornerShape(12.dp)
-                                ) {
-                                    Text(
-                                        text = obsTexto,
-                                        color = obsTextColor,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 12.sp,
-                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
-                                    )
-                                }
                             }
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Mensaje fuera de la tarjeta
+                    Text(
+                        text = "✓ Promedio calculado correctamente",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        color = Color(0xFF2E7D32),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Desarrollado por: Noemi de la Cruz Zavala",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
