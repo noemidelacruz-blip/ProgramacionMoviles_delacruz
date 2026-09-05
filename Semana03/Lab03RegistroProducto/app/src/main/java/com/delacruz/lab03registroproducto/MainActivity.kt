@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,6 +55,7 @@ fun PantallaRegistro() {
     var precio by remember { mutableStateOf("") }
     var cantidad by remember { mutableStateOf("") }
     var mostrarResumen by remember { mutableStateOf(false) }
+    var mensajeError by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -81,7 +83,6 @@ fun PantallaRegistro() {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                // Encabezado con Negrita
                 Text(
                     text = "Nuevo producto",
                     style = MaterialTheme.typography.headlineSmall,
@@ -95,7 +96,6 @@ fun PantallaRegistro() {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Campo Nombre
                 OutlinedTextField(
                     value = nombre,
                     onValueChange = { nombre = it },
@@ -105,7 +105,6 @@ fun PantallaRegistro() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Campos Precio y Cantidad
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
                         value = precio,
@@ -124,18 +123,51 @@ fun PantallaRegistro() {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Botón
-                Button(
-                    onClick = { mostrarResumen = true },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("AGREGAR PRODUCTO")
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Button(
+                        onClick = {
+                            if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
+                                mensajeError = "Por favor completa todos los campos"
+                                mostrarResumen = false
+                            } else if (precio.toDoubleOrNull() == null || cantidad.toIntOrNull() == null) {
+                                mensajeError = "Ingresa montos numéricos válidos"
+                                mostrarResumen = false
+                            } else {
+                                mensajeError = ""
+                                mostrarResumen = true
+                            }
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("AGREGAR")
+                    }
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            nombre = ""
+                            precio = ""
+                            cantidad = ""
+                            mostrarResumen = false
+                            mensajeError = ""
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("LIMPIAR")
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Lógica de mensaje vacío o Card
-                if (!mostrarResumen) {
+                if (mensajeError.isNotEmpty()) {
+                    Text(
+                        text = "⚠ $mensajeError",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                } else if (!mostrarResumen) {
                     Text(
                         text = "Aún no has registrado ningún producto",
                         color = MaterialTheme.colorScheme.outline,
@@ -181,9 +213,8 @@ fun PantallaRegistro() {
                 }
             }
 
-            // Pie de página (Créditos)
             Text(
-                text = "Desarrollado por: Noemi de la Cruz",
+                text = "Desarrollado por: Noemí de la Cruz",
                 color = MaterialTheme.colorScheme.outline,
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
