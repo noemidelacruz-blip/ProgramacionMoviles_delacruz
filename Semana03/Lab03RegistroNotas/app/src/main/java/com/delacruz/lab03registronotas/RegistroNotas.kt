@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
@@ -50,8 +51,9 @@ fun RegistroNotas() {
     var notaMoviles by remember { mutableFloatStateOf(0f) }
     var notaBd by remember { mutableFloatStateOf(0f) }
 
-    // Estado para el Switch
+    // Estados para Switch y Checkbox
     var redondearPromedio by remember { mutableStateOf(false) }
+    var notasConfirmadas by remember { mutableStateOf(false) }
 
     // Fondo degradado
     val backgroundGradient = Brush.verticalGradient(
@@ -170,6 +172,22 @@ fun RegistroNotas() {
                             checkedThumbColor = Color.White,
                             checkedTrackColor = purplePrimary
                         )
+                    )
+                }
+
+                // Checkbox: Confirmar notas
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = notasConfirmadas,
+                        onCheckedChange = { notasConfirmadas = it }
+                    )
+                    Text(
+                        text = "Confirmo que las notas son correctas",
+                        fontSize = 13.sp,
+                        color = Color.DarkGray
                     )
                 }
 
