@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -188,6 +190,29 @@ fun RegistroNotas() {
                         text = "Confirmo que las notas son correctas",
                         fontSize = 13.sp,
                         color = Color.DarkGray
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Botón deshabilitado si no se marca el Checkbox
+                Button(
+                    onClick = { /* Lógica pendiente para requerimientos siguientes */ },
+                    enabled = notasConfirmadas,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(24.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = purplePrimary,
+                        disabledContainerColor = Color(0xFFE0E0E0),
+                        disabledContentColor = Color.Gray
+                    )
+                ) {
+                    Text(
+                        text = "CALCULAR PROMEDIO",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
                     )
                 }
 
