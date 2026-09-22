@@ -34,9 +34,7 @@ Sin embargo, el objeto instanciado mediante `remember { mutableStateListOf(...) 
 
 | Captura 1: Interfaz Principal | Captura 2: Confirmación de Borrado |
 | :---: | :---: |
-|<img width="714" height="1599" alt="image" src="https://github.com/user-attachments/assets/03c20f4b-77d2-4a08-bc6c-88dd82bab1f0" />
-| ![Uploading image.png…]()
- |
+|<img width="320" alt="image" src="https://github.com/user-attachments/assets/03c20f4b-77d2-4a08-bc6c-88dd82bab1f0" /> | <img width="320" alt="image" src="https://github.com/user-attachments/assets/e6297907-5b7f-429b-a688-04db5b6875ee" /> |
 
 --- 
 ## Tecnologías Utilizadas
