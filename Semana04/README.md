@@ -30,16 +30,13 @@ Sin embargo, el objeto instanciado mediante `remember { mutableStateListOf(...) 
 
 ## Capturas de Pantalla de la Aplicación
 
-### Captura 1: Interfaz Principal y Formulario
-![Captura 1: Carrito con productos y panel de totales](<img width="720" height="1612" alt="image" src="https://github.com/user-attachments/assets/92f0ebde-5ee8-44e8-bd45-8da354fa11dc" />
-)
+## Capturas de Pantalla de la Aplicación
 
-### Captura 2: Confirmación de Borrado 
-![Captura 2: Dialogo de eliminacion](<img width="720" height="1612" alt="image" src="https://github.com/user-attachments/assets/be1346c3-1789-4318-a98d-c2b6c3d0084a" />
-)
+| Captura 1: Interfaz Principal | Captura 2: Confirmación de Borrado |
+| :---: | :---: |
+| <img width="330" alt="Interfaz Principal" src="https://github.com" /> | <img width="330" alt="Confirmación de Borrado" src="https://github.com" /> |
 
----
-
+--- 
 ## Tecnologías Utilizadas
 
 - **Lenguaje de Programación**: Kotlin
