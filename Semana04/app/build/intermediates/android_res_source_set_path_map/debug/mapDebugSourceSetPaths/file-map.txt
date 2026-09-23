@@ -1,0 +1,8 @@
+com.delacruz.lab04carritotecsup.app-pngs-0 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\build\generated\res\pngs\debug
+com.delacruz.lab04carritotecsup.app-updated_navigation_xml-1 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\build\generated\updated_navigation_xml\debug
+com.delacruz.lab04carritotecsup.app-packageDebugResources-2 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.delacruz.lab04carritotecsup.app-packageDebugResources-3 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.delacruz.lab04carritotecsup.app-debug-4 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.delacruz.lab04carritotecsup.app-debug-5 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\src\debug\res
+com.delacruz.lab04carritotecsup.app-main-6 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana04\app\src\main\res
+gradleHome-0 C:\Users\noemi\.gradle

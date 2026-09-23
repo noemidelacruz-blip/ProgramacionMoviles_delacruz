@@ -1,0 +1,8 @@
+com.delacruz.lab03registronotas.app-pngs-0 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\build\generated\res\pngs\debug
+com.delacruz.lab03registronotas.app-updated_navigation_xml-1 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\build\generated\updated_navigation_xml\debug
+com.delacruz.lab03registronotas.app-packageDebugResources-2 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.delacruz.lab03registronotas.app-packageDebugResources-3 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.delacruz.lab03registronotas.app-debug-4 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.delacruz.lab03registronotas.app-debug-5 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\src\debug\res
+com.delacruz.lab03registronotas.app-main-6 C:\Users\noemi\Documents\ARCHIVOS SICLO 4\PROGRAMACION EN MOVILES\ProgramacionMoviles_delacruz\Semana03\Lab03RegistroNotas\app\src\main\res
+gradleHome-0 C:\Users\noemi\.gradle
