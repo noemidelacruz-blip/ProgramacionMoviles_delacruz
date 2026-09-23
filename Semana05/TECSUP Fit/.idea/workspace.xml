@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="57c3edce-a567-4b8b-8e2f-7bde8cf3224d" name="Changes" comment="integrar Scaffold, BottomNavigationBar y NavHost con mutableStateListOf en MainActivity&#10;&#10;- Se configuró el contenedor principal Scaffold integrando un BottomNavigationBar de 4 pestañas.&#10;- Se implementó la lógica de visibilidad condicional para ocultar la barra inferior en las pantallas de detalle y confirmación.&#10;- Se centralizó el estado global de reservas usando mutableStateListOf para permitir inserciones en tiempo real al reservar.&#10;- Se añadieron las rutas composable en el NavHost junto con el desempaquetado y decodificación de argumentos mediante URLDecoder." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[PhysicalDevice::serial=AK7BCP4316406621]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="TECSUP Fit" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "noemidelacruz-blip"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/noemidelacruz-blip/ProgramacionMoviles_delacruz.git",
+    "accountId": "8719b5e9-6bb1-4d81-8289-14d05e40d89c"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3JjpO2gCHhFH7Ir2wPK3bluLr6A" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "sin-ia-v1",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="TECSUP_Fit.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="57c3edce-a567-4b8b-8e2f-7bde8cf3224d" name="Changes" comment="" />
+      <created>1790184297409</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790184297409</updated>
+    </task>
+    <task id="LOCAL-00001" summary="definir estructuras de datos para ClaseFit, Reserva y PerfilUsuario">
+      <option name="closed" value="true" />
+      <created>1790184675367</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1790184675367</updated>
+    </task>
+    <task id="LOCAL-00002" summary="definir estructuras de datos para ClaseFit, Reserva y PerfilUsuario">
+      <option name="closed" value="true" />
+      <created>1790184776529</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1790184776529</updated>
+    </task>
+    <task id="LOCAL-00003" summary="implementar sealed class DestinoFit con codificación URL de parámetros&#10;&#10;- Se creó la sealed class DestinoFit para centralizar todas las rutas de la aplicación de forma fuertemente tipada.&#10;- Se definieron los destinos principales: Inicio, Reservas, Rutinas y Perfil.&#10;- Se implementaron las funciones helper crearRuta() en los objetos DetalleClase y Confirmacion.&#10;- Se integró URLEncoder con UTF-8 para encriptar/inmunizar espacios y caracteres especiales en los argumentos pasados por la URL de navegación.">
+      <option name="closed" value="true" />
+      <created>1790184977023</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1790184977023</updated>
+    </task>
+    <task id="LOCAL-00004" summary="construir PantallaInicio con filtros horizontales y LazyColumn de clases&#10;&#10;- Se creó la interfaz de inicio incluyendo un banner superior con la identidad visual institucional en verde (#006847).&#10;- Se implementó un LazyRow dinámico con FilterChip de Material 3 para filtrar las clases por 'Hoy' y 'Esta semana'.&#10;- Se construyó un LazyColumn de alto rendimiento para renderizar la lista de clases disponibles usando Card y Modifier.clickable.&#10;- Se configuraron estados locales con remember y mutableStateOf para la interacción de los chips de filtrado.">
+      <option name="closed" value="true" />
+      <created>1790185452360</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1790185452360</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot;desarrollar PantallaDetalleClase y PantallaConfirmacion de cupos&#10;&#10;- Se diseñó la vista de detalle mostrando la información extendida de la clase, horario, sala y disponibilidad de cupos.&#10;- Se añadió el botón de acción principal 'Reservar cupo' adaptado a los colores del tema de la app.&#10;- Se construyó la PantallaConfirmacion con un diseño centralizado que valida la reserva mediante un ícono de check.&#10;- Se estructuró el flujo de navegación posterior para redirigir al usuario directamente a la pestaña de reservas.&quot;">
+      <option name="closed" value="true" />
+      <created>1790185862971</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1790185862971</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&quot;Crear PantallaReservas con diferenciación visual de estados&#10;&#10;- Se implementó la vista de reservas asignadas usando LazyColumn para una lista dinámica de elementos.&#10;- Se añadió una barra lateral de color e indicador Chip en cada tarjeta para distinguir reservas 'Confirmadas' vs 'Completadas'.&#10;- Se aplicó la paleta de colores institucional para resaltar visualmente los estados activos sobre fondos neutros.&#10;- Se aseguró el soporte para mostrar de forma reactiva las nuevas reservas realizadas en tiempo real.&quot;">
+      <option name="closed" value="true" />
+      <created>1790186004020</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1790186004020</updated>
+    </task>
+    <task id="LOCAL-00007" summary="implementar PantallaPerfil con avatar personalizado y métricas de racha&#10;&#10;- Se diseñó la cabecera de perfil con un avatar circular que muestra las iniciales del usuario ('DR').&#10;- Se integró la información general del alumno y su suscripción ('Plan Premium').&#10;- Se agregaron tarjetas estilizadas en disposición horizontal (Row + weight) para mostrar 'Clases asistidas' y 'Rachas'.&#10;- Se dejó preparada la vista base para la sección de 'Rutinas' del alumno.">
+      <option name="closed" value="true" />
+      <created>1790186393916</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1790186393916</updated>
+    </task>
+    <task id="LOCAL-00008" summary="integrar Scaffold, BottomNavigationBar y NavHost con mutableStateListOf en MainActivity&#10;&#10;- Se configuró el contenedor principal Scaffold integrando un BottomNavigationBar de 4 pestañas.&#10;- Se implementó la lógica de visibilidad condicional para ocultar la barra inferior en las pantallas de detalle y confirmación.&#10;- Se centralizó el estado global de reservas usando mutableStateListOf para permitir inserciones en tiempo real al reservar.&#10;- Se añadieron las rutas composable en el NavHost junto con el desempaquetado y decodificación de argumentos mediante URLDecoder.">
+      <option name="closed" value="true" />
+      <created>1790186697967</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1790186697967</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(domain): definir estructuras de datos para ClaseFit, Reserva y PerfilUsuario" />
+    <MESSAGE value="definir estructuras de datos para ClaseFit, Reserva y PerfilUsuario" />
+    <MESSAGE value="implementar sealed class DestinoFit con codificación URL de parámetros&#10;&#10;- Se creó la sealed class DestinoFit para centralizar todas las rutas de la aplicación de forma fuertemente tipada.&#10;- Se definieron los destinos principales: Inicio, Reservas, Rutinas y Perfil.&#10;- Se implementaron las funciones helper crearRuta() en los objetos DetalleClase y Confirmacion.&#10;- Se integró URLEncoder con UTF-8 para encriptar/inmunizar espacios y caracteres especiales en los argumentos pasados por la URL de navegación." />
+    <MESSAGE value="construir PantallaInicio con filtros horizontales y LazyColumn de clases&#10;&#10;- Se creó la interfaz de inicio incluyendo un banner superior con la identidad visual institucional en verde (#006847).&#10;- Se implementó un LazyRow dinámico con FilterChip de Material 3 para filtrar las clases por 'Hoy' y 'Esta semana'.&#10;- Se construyó un LazyColumn de alto rendimiento para renderizar la lista de clases disponibles usando Card y Modifier.clickable.&#10;- Se configuraron estados locales con remember y mutableStateOf para la interacción de los chips de filtrado." />
+    <MESSAGE value="&quot;desarrollar PantallaDetalleClase y PantallaConfirmacion de cupos&#10;&#10;- Se diseñó la vista de detalle mostrando la información extendida de la clase, horario, sala y disponibilidad de cupos.&#10;- Se añadió el botón de acción principal 'Reservar cupo' adaptado a los colores del tema de la app.&#10;- Se construyó la PantallaConfirmacion con un diseño centralizado que valida la reserva mediante un ícono de check.&#10;- Se estructuró el flujo de navegación posterior para redirigir al usuario directamente a la pestaña de reservas.&quot;" />
+    <MESSAGE value="&quot;Crear PantallaReservas con diferenciación visual de estados&#10;&#10;- Se implementó la vista de reservas asignadas usando LazyColumn para una lista dinámica de elementos.&#10;- Se añadió una barra lateral de color e indicador Chip en cada tarjeta para distinguir reservas 'Confirmadas' vs 'Completadas'.&#10;- Se aplicó la paleta de colores institucional para resaltar visualmente los estados activos sobre fondos neutros.&#10;- Se aseguró el soporte para mostrar de forma reactiva las nuevas reservas realizadas en tiempo real.&quot;" />
+    <MESSAGE value="implementar PantallaPerfil con avatar personalizado y métricas de racha&#10;&#10;- Se diseñó la cabecera de perfil con un avatar circular que muestra las iniciales del usuario ('DR').&#10;- Se integró la información general del alumno y su suscripción ('Plan Premium').&#10;- Se agregaron tarjetas estilizadas en disposición horizontal (Row + weight) para mostrar 'Clases asistidas' y 'Rachas'.&#10;- Se dejó preparada la vista base para la sección de 'Rutinas' del alumno." />
+    <MESSAGE value="integrar Scaffold, BottomNavigationBar y NavHost con mutableStateListOf en MainActivity&#10;&#10;- Se configuró el contenedor principal Scaffold integrando un BottomNavigationBar de 4 pestañas.&#10;- Se implementó la lógica de visibilidad condicional para ocultar la barra inferior en las pantallas de detalle y confirmación.&#10;- Se centralizó el estado global de reservas usando mutableStateListOf para permitir inserciones en tiempo real al reservar.&#10;- Se añadieron las rutas composable en el NavHost junto con el desempaquetado y decodificación de argumentos mediante URLDecoder." />
+    <option name="LAST_COMMIT_MESSAGE" value="integrar Scaffold, BottomNavigationBar y NavHost con mutableStateListOf en MainActivity&#10;&#10;- Se configuró el contenedor principal Scaffold integrando un BottomNavigationBar de 4 pestañas.&#10;- Se implementó la lógica de visibilidad condicional para ocultar la barra inferior en las pantallas de detalle y confirmación.&#10;- Se centralizó el estado global de reservas usando mutableStateListOf para permitir inserciones en tiempo real al reservar.&#10;- Se añadieron las rutas composable en el NavHost junto con el desempaquetado y decodificación de argumentos mediante URLDecoder." />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.delacruz.tecsupfit">
+          <value>
+            <CheckInfo lastCheckTimestamp="1790184678474" />
+          </value>
+        </entry>
+        <entry key="com.delacruz.tecsupfit.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1790184678474" />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
