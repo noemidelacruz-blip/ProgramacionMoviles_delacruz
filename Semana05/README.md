@@ -77,3 +77,38 @@ Aplica esta reestructuración directamente sobre los composables existentes.
 - Framework UI: Jetpack Compose (Material Design 3)
 - Navegacion: Jetpack Navigation Compose
 - Arquitectura: Clean Architecture / UI State Pattern
+
+## Captura de pantalla del resultado:
+### 1. Inicio de Sesión — Portal Académico
+Formulario de ingreso con validación de campos obligatorios, estado inicial vacío y diseño visual pastel.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/ebaa54a1-5009-4f9b-8718-4e8c931695ae" />
+
+---
+
+### 2. Menú Principal y Saludo Dinámico
+Cabecera con degradado lila centrado, saludo personalizado según el usuario autenticado y accesos directos al sistema.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/8002af09-0cd0-4039-8bc7-f0aabc03c644" />
+
+---
+
+### 3. Directorio de Alumnos
+Lista optimizada de estudiantes con avatares fotográficos reales, especialidad y navegación hacia el expediente.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/4ee685f6-fef3-4dfc-813c-472d1be45e7e" />
+
+---
+
+### 4. Expediente Académico Detallado
+Cabecera morada curva con foto superpuesta y tarjeta de datos personales, ID, correo y biografía del estudiante.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/49f2d791-3a12-40dd-97b0-d2f775e285a6" />
+
+---
+
+### 5. Configuración de Perfil
+Tarjeta con degradado horizontal morado/caoba, datos personales agrupados por secciones y opción de cierre de sesión.
+
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/56b00a6a-03f1-4502-a093-c5f11780e3aa" />
+
