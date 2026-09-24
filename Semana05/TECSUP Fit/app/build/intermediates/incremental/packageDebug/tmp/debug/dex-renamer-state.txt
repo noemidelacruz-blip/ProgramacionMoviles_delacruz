@@ -1,4 +1,4 @@
-#Wed Sep 23 13:31:00 PET 2026
+#Wed Sep 23 19:10:43 PET 2026
 base.0=C\:\\Users\\noemi\\Documents\\ARCHIVOS SICLO 4\\PROGRAMACION EN MOVILES\\ProgramacionMoviles_delacruz\\Semana05\\TECSUP Fit\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\noemi\\Documents\\ARCHIVOS SICLO 4\\PROGRAMACION EN MOVILES\\ProgramacionMoviles_delacruz\\Semana05\\TECSUP Fit\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.2=C\:\\Users\\noemi\\Documents\\ARCHIVOS SICLO 4\\PROGRAMACION EN MOVILES\\ProgramacionMoviles_delacruz\\Semana05\\TECSUP Fit\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex

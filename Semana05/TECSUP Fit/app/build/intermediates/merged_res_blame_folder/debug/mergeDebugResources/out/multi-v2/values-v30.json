@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.delacruz.tecsupfit.app-mergeDebugResources-38:/values-v30/values-v30.xml",
+            "outputFile": "com.delacruz.tecsupfit.app-mergeDebugResources-42:/values-v30/values-v30.xml",
             "map": [
                 {
                     "source": "C:\\Users\\noemi\\.gradle\\caches\\9.4.1\\transforms\\e46d0fa241a902af9d26e1a0f1eae9a1\\transformed\\material3\\res\\values-v30\\values-v30.xml",
